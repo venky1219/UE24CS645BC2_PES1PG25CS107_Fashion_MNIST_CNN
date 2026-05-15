@@ -82,8 +82,8 @@ No other dependencies. The dataset is downloaded automatically on first run.
 
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/UE24CS645BC2_<USN>_Fashion_MNIST_CNN
-cd UE24CS645BC2_<USN>_Fashion_MNIST_CNN
+git clone https://github.com/venky1219/UE24CS645BC2_PES1PG25CS107_Fashion_MNIST_CNN
+
 
 # Install numpy if needed
 pip install numpy
@@ -147,10 +147,3 @@ Epoch  2/5  loss=1.8721  train_acc=38.52%  val_acc=42.30%  (86.1s)
 | 9 | Ankle boot |
 
 ---
-
-## Assignment Details
-
-- **Course**: DLTP (UE24CS645B C2)  
-- **Submission deadline**: Friday, 15 May 2026, 11:59 PM  
-- **Submit to**: paragjainpes@gmail.com  
-- **Subject**: `DLTP_Assignment_1`
