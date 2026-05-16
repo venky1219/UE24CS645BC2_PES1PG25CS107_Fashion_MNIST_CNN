@@ -1,10 +1,3 @@
-"""
-CNN from Scratch – Fashion MNIST
-=================================
-Implements Convolution, MaxPool, Flatten, and Fully-Connected layers
-with forward AND backward passes using only NumPy.
-"""
-
 import numpy as np
 import struct
 import gzip
@@ -12,9 +5,6 @@ import os
 import urllib.request
 import time
 
-# ─────────────────────────────────────────────
-# 1.  DATA LOADING  (raw IDX files via urllib)
-# ─────────────────────────────────────────────
 BASE_URL = "http://fashion-mnist.s3-website.eu-west-1.amazonaws.com/"
 FILES = {
     "train_images": "train-images-idx3-ubyte.gz",
@@ -63,9 +53,7 @@ def load_fashion_mnist(data_dir="fashion_mnist_data"):
             X_test[:, np.newaxis],  y_test)
 
 
-# ─────────────────────────────────────────────
-# 2.  CONVOLUTION LAYER
-# ─────────────────────────────────────────────
+
 class ConvLayer:
     """
     2-D Convolution layer (no padding, stride = 1).
@@ -94,7 +82,6 @@ class ConvLayer:
         # Cache for backward pass
         self._cache = {}
 
-    # ── Forward ──────────────────────────────
     def forward(self, X: np.ndarray) -> np.ndarray:
         """
         X : (N, C_in, H, W)
@@ -116,13 +103,11 @@ class ConvLayer:
         self._cache = {"X": X, "Z": Z}
         return Z
 
-    # ── ReLU activation ──────────────────────
     def relu(self, Z: np.ndarray) -> np.ndarray:
         A = np.maximum(0, Z)
         self._cache["A"] = A
         return A
 
-    # ── Backward ─────────────────────────────
     def backward(self, dA: np.ndarray) -> np.ndarray:
         """
         dA : gradient w.r.t. the ReLU output  (N, F, H_out, W_out)
@@ -166,9 +151,7 @@ class ConvLayer:
                 f"in_channels={self.W.shape[1]})")
 
 
-# ─────────────────────────────────────────────
-# 3.  MAX-POOL LAYER
-# ─────────────────────────────────────────────
+
 class MaxPoolLayer:
     """
     2-D Max-Pooling (non-overlapping windows, stride = pool_size).
@@ -181,7 +164,7 @@ class MaxPoolLayer:
         self.p = pool_size
         self._cache = {}
 
-    # ── Forward ──────────────────────────────
+   
     def forward(self, X: np.ndarray) -> np.ndarray:
         N, C, H, W = X.shape
         p = self.p
@@ -200,7 +183,7 @@ class MaxPoolLayer:
         self._cache = {"masks": masks, "input_shape": X.shape}
         return out
 
-    # ── Backward ─────────────────────────────
+
     def backward(self, dout: np.ndarray) -> np.ndarray:
         """
         dout : (N, C, H_out, W_out)
@@ -225,9 +208,6 @@ class MaxPoolLayer:
         return f"MaxPoolLayer(pool_size={self.p})"
 
 
-# ─────────────────────────────────────────────
-# 4.  FLATTEN LAYER
-# ─────────────────────────────────────────────
 class FlattenLayer:
     """Reshapes (N, C, H, W) → (N, C*H*W)."""
 
@@ -245,9 +225,7 @@ class FlattenLayer:
         return "FlattenLayer()"
 
 
-# ─────────────────────────────────────────────
-# 5.  FULLY-CONNECTED LAYER  (with ReLU or Softmax)
-# ─────────────────────────────────────────────
+
 class FCLayer:
     """
     Dense layer.
@@ -270,7 +248,7 @@ class FCLayer:
 
         self._cache = {}
 
-    # ── Activations ──────────────────────────
+
     @staticmethod
     def _relu(Z):
         return np.maximum(0, Z)
@@ -281,7 +259,7 @@ class FCLayer:
         exp_Z = np.exp(Z_shifted)
         return exp_Z / exp_Z.sum(axis=1, keepdims=True)
 
-    # ── Forward ──────────────────────────────
+    
     def forward(self, X: np.ndarray) -> np.ndarray:
         """X : (N, in_features)  →  A : (N, out_features)"""
         Z = X @ self.W + self.b
@@ -293,7 +271,7 @@ class FCLayer:
         self._cache = {"X": X, "Z": Z, "A": A}
         return A
 
-    # ── Backward ─────────────────────────────
+    
     def backward(self, dA: np.ndarray) -> np.ndarray:
         """
         For the output (softmax) layer, dA is already dZ (passed from loss).
@@ -324,9 +302,6 @@ class FCLayer:
                 f"act={self.activation})")
 
 
-# ─────────────────────────────────────────────
-# 6.  LOSS  (Categorical Cross-Entropy)
-# ─────────────────────────────────────────────
 def cross_entropy_loss(probs: np.ndarray, y: np.ndarray):
     """
     probs : (N, C)  softmax output
@@ -344,9 +319,7 @@ def cross_entropy_loss(probs: np.ndarray, y: np.ndarray):
     return loss, dZ
 
 
-# ─────────────────────────────────────────────
-# 7.  FULL CNN MODEL
-# ─────────────────────────────────────────────
+
 class CNN:
     """
     Architecture
@@ -408,9 +381,7 @@ class CNN:
         print("═" * 42)
 
 
-# ─────────────────────────────────────────────
-# 8.  TRAINING FUNCTION
-# ─────────────────────────────────────────────
+
 def train(model: CNN,
           X_train: np.ndarray, y_train: np.ndarray,
           X_val:   np.ndarray, y_val:   np.ndarray,
@@ -483,9 +454,6 @@ def train(model: CNN,
     return history
 
 
-# ─────────────────────────────────────────────
-# 9.  EVALUATION FUNCTION
-# ─────────────────────────────────────────────
 def evaluate(model: CNN,
              X_test: np.ndarray, y_test: np.ndarray,
              batch_size: int = 64) -> None:
@@ -513,9 +481,7 @@ def evaluate(model: CNN,
     print("═" * 42)
 
 
-# ─────────────────────────────────────────────
-# 10. CONFUSION MATRIX (text)
-# ─────────────────────────────────────────────
+
 def confusion_matrix_text(model: CNN,
                            X_test: np.ndarray, y_test: np.ndarray,
                            batch_size: int = 64) -> None:
@@ -537,9 +503,7 @@ def confusion_matrix_text(model: CNN,
         print(f"True {i:2d}  " + "  ".join(f"{v:4d}" for v in row))
 
 
-# ─────────────────────────────────────────────
-# 11. MAIN
-# ─────────────────────────────────────────────
+
 if __name__ == "__main__":
     np.random.seed(42)
 
