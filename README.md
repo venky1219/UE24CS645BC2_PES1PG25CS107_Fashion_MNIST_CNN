@@ -1,16 +1,5 @@
 # UE24CS645BC2_PES1PG25CS107_Fashion_MNIST_CNN
 
-## Name
-M VENKATESH
-
-## USN
-PES1PG25CS107
-
----
-
-# Submission Details
-
-Subject:
 ```text
 DLTP_Assignment_1
 
