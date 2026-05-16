@@ -4,6 +4,15 @@ A Convolutional Neural Network built **from first principles** using only NumPy 
 Trained and evaluated on the [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset.
 
 ---
+## Name
+M VENKATESH
+
+## USN
+PES1PG25CS107
+
+---
+
+# Submission Details
 
 ## Architecture
 
