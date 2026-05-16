@@ -1,8 +1,5 @@
 # UE24CS645BC2_PES1PG25CS107_Fashion_MNIST_CNN
 
-```text
-DLTP_Assignment_1
-
 A Convolutional Neural Network built **from first principles** using only NumPy — no PyTorch, no TensorFlow, no Keras.  
 Trained and evaluated on the [Fashion-MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset.
 
